@@ -11,12 +11,16 @@ namespace BackgroundServiceTemplate.Jobs
 {
     public class ExampleJob : BackgroundServiceJob
     {
-        protected override void ExecuteInner(IJobExecutionContext context)
-        {
-            Trace.WriteLine("Example job executing...");
-        }
+		protected override Task ExecuteInner(IJobExecutionContext context)
+		{
+			//Trace.WriteLine("Example job executing...");
+			Console.WriteLine("Job one is running");
+			
+			return Task.FromResult(true);
 
-        public override TriggerBuilder GetSchedule(TriggerBuilder trigger)
+		}
+
+		public override TriggerBuilder GetSchedule(TriggerBuilder trigger)
         {
             return trigger.WithSimpleSchedule(x => x.WithIntervalInSeconds(2).WithRepeatCount(5));
         }

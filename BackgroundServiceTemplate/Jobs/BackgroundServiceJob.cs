@@ -7,14 +7,17 @@ using System.Threading.Tasks;
 
 namespace BackgroundServiceTemplate.Interfaces
 {
-    public abstract class BackgroundServiceJob : IJob
+	[DisallowConcurrentExecution]
+	public abstract class BackgroundServiceJob : IJob
     {
-        public abstract TriggerBuilder GetSchedule(TriggerBuilder triggerBuilder);
-        protected abstract void ExecuteInner(IJobExecutionContext context);
+		Task IJob.Execute(IJobExecutionContext context)
+		{
+			return ExecuteInner(context);
+		}
 
-        public void Execute(IJobExecutionContext context)
-        {
-            ExecuteInner(context);
-        }
+		public abstract TriggerBuilder GetSchedule(TriggerBuilder triggerBuilder);
+		protected abstract Task ExecuteInner(IJobExecutionContext context);
+
+		
     }
 }

@@ -31,12 +31,12 @@ namespace BackgroundServiceTemplate.Services
             Jobs = jobs;
         }
 
-        public void Start()
+        public async void Start()
         {
             Trace.WriteLine("Service scheduler starting...");
             try
             {
-                Scheduler = SchedulerFactory.GetScheduler();
+                Scheduler = await SchedulerFactory.GetScheduler();
 
                 Trace.WriteLine("Firing triggers...");
                 Scheduler.Start();
